@@ -18,11 +18,17 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {onAuthStateChanged, signOut as authSignOut} from "firebase/auth";
 import {auth} from "./firebase";
+interface AuthUserType {
+    uid: string | null;
+    email: string | null;
+}
 
-const AuthUserContext = createContext({
-    authUser: null,
-    isLoading: true,
-});
+interface ContextType {
+    authUser: AuthUserType | null;
+    isLoading: boolean;
+    signOut: () => Promise<void>;
+}
+const AuthUserContext = createContext<ContextType | undefined>(undefined);
 
 export default function useFirebaseAuth(){
     const [authUser, setAuthUser] = useState({

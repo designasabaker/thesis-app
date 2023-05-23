@@ -5,7 +5,13 @@ const SharedLayout = () => {
     return (
         <>
             <StyledNavbar />
-            <Outlet />
+            <div
+                style={{
+                    margin: '16px 0 0 0',
+                    }}
+            >
+                <Outlet />
+            </div>
         </>
     );
 };

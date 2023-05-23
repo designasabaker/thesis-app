@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, setDoc, where } from 'firebase/firestore'; 
+import { addDoc, collection, deleteDoc, doc,  onSnapshot, orderBy, query, setDoc, where } from 'firebase/firestore';
 import { db } from './firebase.js';
 import { getDownloadURL } from './storage';
 
 const RECEIPTS_COLLECTION = "receipts";
 
-export function addReceipt(uid, date, locationName, address, items, amount, imageBucket){
+export function addReceipt(uid:string, date:Date, locationName:string, address:string, items:any, amount:number, imageBucket:string){
     addDoc(collection(db, RECEIPTS_COLLECTION), {
         uid,
         date,
@@ -37,12 +37,12 @@ export function addReceipt(uid, date, locationName, address, items, amount, imag
     });
 }
 
-export async function getReceipts(uid, setReceipts,setIsLoadingReceipts){
+export async function getReceipts(uid:string, setReceipts:any,setIsLoadingReceipts:any){
     const q = query(collection(db, RECEIPTS_COLLECTION), where("uid", "==", uid), orderBy("date", "desc"));
     // const querySnapshot = await getDocs(q);
 
     return onSnapshot(q, (querySnapshot) => {
-        let allReceipts = [];
+        const allReceipts:any[] = [];
         for (const documentSnapshot of querySnapshot.docs){
             const receipt = documentSnapshot.data();
             allReceipts.push({
@@ -57,7 +57,7 @@ export async function getReceipts(uid, setReceipts,setIsLoadingReceipts){
     });
 }
 
-export function updateReceipt(docId,uid, date, locationName, address, items, amount, imageBucket){
+export function updateReceipt(docId:string,uid:string, date:Date, locationName:string, address:string, items:any, amount:number, imageBucket:string){
     setDoc(doc(db, RECEIPTS_COLLECTION, docId), {
         uid,
         date,
@@ -73,7 +73,7 @@ export function updateReceipt(docId,uid, date, locationName, address, items, amo
     });
 }
 
-export function deleteReceipt(docId){
+export function deleteReceipt(docId:string){
     deleteDoc(doc(db, RECEIPTS_COLLECTION, docId)).then(() => {
         console.log("Document successfully deleted!");
     }).catch((error) => {
