@@ -4,8 +4,8 @@ import Cart from '../Components/Cart';
 import {Food as FoodClass} from '../Stores/Food';
 import {Cart as CartClass} from '../Stores/Cart';
 import FoodJSONList, {foodJSON} from '../Data/Foods';
-import {useMemo} from "react";
 import {observer} from "mobx-react";
+import JoySticker2 from "../Components/JoySticker2";
 
 function initFoodList(){
     // initialize food list HERE
@@ -24,13 +24,10 @@ function initFoodList(){
     });
     return foodObjList;
 }
+const foodObjList:FoodClass[] = initFoodList();
+const cartObj:CartClass = new CartClass(1,100,100,"https://www.freeiconspng.com/thumbs/cart-icon/shopping-cart-icon-19.png");
 
 export const Shopping = () => {
-    const foodObjList:FoodClass[] = useMemo(()=>initFoodList(),[]);
-    const cartObj:CartClass = useMemo(()=>{
-        return new CartClass(1,100,100,"");
-    },[]);
-
     return(
         <>
             <div
@@ -47,7 +44,16 @@ export const Shopping = () => {
                     <Food key={`foodObj${index}`} food={foodObj} />
                 )})}
             {/* Cart */}
-            <Cart CartObj={cartObj} foodsListenOn={foodObjList}/>
+            <Cart
+                id={'cart01'}
+                CartObj={cartObj}
+                foodsListenOn={foodObjList}
+            />
+            {/*<JoySticker />*/}
+            <JoySticker2
+                movementFn={cartObj.addMovement}
+                leaveFn={cartObj.clearMovement}
+            />
         </>
     )
 }

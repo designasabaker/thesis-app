@@ -13,6 +13,7 @@ const isClose = (food:FoodClass, cart:CartClass) => {
 }
 
 export const Cart = (props:any) => {
+    const id = props.id;
     const cart: CartClass = props.CartObj;
     const foodsListenOn:FoodClass[] = props.foodsListenOn;
     const foodsOnDisplay:FoodClass[] = foodsListenOn.filter((food:FoodClass) => food.isDisplay);
@@ -27,14 +28,14 @@ export const Cart = (props:any) => {
 
     return (
         <div
+            id={id}
             style={{
                 position: 'fixed',
                 width: '60px',
                 height: '60px',
                 left: cart.posX,
                 top: cart.posY,
-                // background: `url(${cart.image})`,
-                background:'red',
+                background: `url(${cart.image})`,
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
                 }}
