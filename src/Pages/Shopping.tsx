@@ -6,6 +6,7 @@ import {Cart as CartClass} from '../Stores/Cart';
 import FoodJSONList, {foodJSON} from '../Data/Foods';
 import {observer} from "mobx-react";
 import JoySticker2 from "../Components/JoySticker2";
+import CartShoppingList from "../Components/CartShoppingList";
 
 function initFoodList(){
     // initialize food list HERE
@@ -49,6 +50,7 @@ export const Shopping = () => {
                 CartObj={cartObj}
                 foodsListenOn={foodObjList}
             />
+            <CartShoppingList cartObj={cartObj}/>
             {/*<JoySticker />*/}
             <JoySticker2
                 movementFn={cartObj.addMovement}

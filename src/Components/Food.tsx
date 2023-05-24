@@ -13,7 +13,6 @@ export const Food = (props:any) => {
                 height: '60px',
                 left: food.posX,
                 top: food.posY,
-                background: `url(${food.image})`,
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
                 }}
@@ -31,7 +30,7 @@ export const Food = (props:any) => {
             >
                 {isLoading ? 'Loading...' : food.name}
             </p>
-            {food.isDisplay &&
+            {food.isDisplay ?
                 <img style={{
                     position: 'absolute',
                     width: '100%',
@@ -40,6 +39,8 @@ export const Food = (props:any) => {
                     onLoad={() => setIsLoading(false)}
                     alt={food.name}
                 />
+                :
+                <p>X</p>
             }
         </div>
     )

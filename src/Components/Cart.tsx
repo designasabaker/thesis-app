@@ -16,6 +16,7 @@ export const Cart = (props:any) => {
     const id = props.id;
     const cart: CartClass = props.CartObj;
     const foodsListenOn:FoodClass[] = props.foodsListenOn;
+
     const foodsOnDisplay:FoodClass[] = foodsListenOn.filter((food:FoodClass) => food.isDisplay);
     const foodsClose:FoodClass[] = foodsOnDisplay.filter((food:FoodClass) => isClose(food,cart));
 
