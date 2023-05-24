@@ -35,6 +35,10 @@ export class Cart {
         })
     }
 
+    offsetPos = (x: number, y: number) => {
+        this.posX += x;
+        this.posY += y;
+    }
     addMovement =throttle( (x:number, y:number) => {
         clearInterval(this.moveIntervalId);
         const scale = 10;

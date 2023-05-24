@@ -4,9 +4,10 @@ import Cart from '../Components/Cart';
 import {Food as FoodClass} from '../Stores/Food';
 import {Cart as CartClass} from '../Stores/Cart';
 import FoodJSONList, {foodJSON} from '../Data/Foods';
-import {observer} from "mobx-react";
+// import {observer} from "mobx-react";
 import JoySticker2 from "../Components/JoySticker2";
 import CartShoppingList from "../Components/CartShoppingList";
+import {observer} from "mobx-react";
 
 function initFoodList(){
     // initialize food list HERE
@@ -57,6 +58,9 @@ export const Shopping = () => {
                 // console.log('click');
                 const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid)
                 if(!foodObj) return;
+                //move cart first to avoid trigger isClose
+                cartObj.offsetPos(0,100);
+                foodObj.preventReAdding();
                 foodObj.setDisplay(true);
                 cartObj.removeFood(foodid);
             }

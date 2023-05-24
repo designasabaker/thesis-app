@@ -1,6 +1,7 @@
 import {Cart as CartClass} from '../Stores/Cart';
 import {Food as FoodClass} from '../Stores/Food';
 import {observer} from "mobx-react";
+import {useEffect} from "react";
 
 const close_distance_threshold = 60;
 const isClose = (food:FoodClass, cart:CartClass) => {
@@ -22,13 +23,16 @@ export const Cart = (props:any) => {
 
     const foodsOnDisplay = foodsListenOn.filter((food:FoodClass) => food.isDisplay);
     const foodsClose = foodsOnDisplay.filter((food:FoodClass) => isClose(food,cart));
+    const foodsCloseButNotJustRestored = foodsClose.filter((food:FoodClass) => !food.justRestored);
 
-    if (foodsClose.length > 0){
-        foodsClose.forEach((food:FoodClass) => {
+    // avoid cart and food re-render conflict
+    useEffect(()=>{
+        if (foodsCloseButNotJustRestored.length > 0){
+            foodsCloseButNotJustRestored.forEach((food:FoodClass) => {
             food.setDisplay(false);
             cart.addFood(food.fid)
         })
-    }
+    }},[foodsCloseButNotJustRestored])
 
     return (
         <div

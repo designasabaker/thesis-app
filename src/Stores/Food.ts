@@ -7,6 +7,7 @@ export class Food {
     posY = 0;
     image = '';
     isDisplay = true;
+    justRestored = false;
 
     constructor(fid: string, name: string, posX: number, posY: number, image: string) {
         makeAutoObservable(this);
@@ -16,6 +17,7 @@ export class Food {
         this.posY = posY;
         this.image = image;
         this.isDisplay = true;
+        this.justRestored = false;
     }
 
     setPos = (x: number, y: number) => {
@@ -25,6 +27,13 @@ export class Food {
 
     setDisplay = (isDisplay: boolean) => {
         this.isDisplay = isDisplay;
+    }
+
+    preventReAdding = () => {
+        this.justRestored = true;
+        setTimeout(()=>{
+            this.justRestored = false;
+        }, 2000);
     }
 }
 
