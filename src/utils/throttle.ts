@@ -1,4 +1,4 @@
-export function throttle(fn:(...arg:any[])=>any, interval:number = 300){
+export function throttle(fn:(...arg:any[])=>any, interval= 300){
     let lock = false;
     return function(this:unknown, ...args:any[]){
         if(lock) return;

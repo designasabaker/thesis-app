@@ -8,6 +8,7 @@ import FoodJSONList, {foodJSON} from '../Data/Foods';
 import JoySticker2 from "../Components/JoySticker2";
 import CartShoppingList from "../Components/CartShoppingList";
 import {observer} from "mobx-react";
+// import randomNums from "../utils/randomNums";
 
 function initFoodList(){
     // initialize food list HERE
@@ -19,10 +20,15 @@ function initFoodList(){
     const numOFGrade:number = numOfFood + 2;
     const unitWidth:number = windowWidth / numOFGrade;
     const unitHeight:number = windowHeight / numOFGrade;
+    // const indexSet:number[] = randomNums(numOfFood, 0, numOFGrade * numOFGrade)
 
     FoodJSONList.forEach((food:foodJSON) => {
         const indexX:number = Math.floor(Math.random() * numOfFood + 1);
         const indexY:number = Math.floor(Math.random() * numOfFood + 1);
+
+        // const indexX:number = indexSet[index] % numOFGrade;
+        // const indexY:number = indexSet[(2 * index + 1) % indexSet.length] % numOFGrade;
+
         const newFoodObj = new FoodClass(food.id, food.name, unitWidth * indexX,unitHeight * indexY, food.srcImg);
         foodObjList.push(newFoodObj);
         return null;
