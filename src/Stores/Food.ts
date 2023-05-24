@@ -1,14 +1,14 @@
 import {makeAutoObservable} from "mobx";
 
 export class Food {
-    fid = 1;
+    fid:string;
     name = '';
     posX = 0;
     posY = 0;
     image = '';
     isDisplay = true;
 
-    constructor(fid: number, name: string, posX: number, posY: number, image: string) {
+    constructor(fid: string, name: string, posX: number, posY: number, image: string) {
         makeAutoObservable(this);
         this.fid = fid;
         this.name = name;
@@ -21,6 +21,10 @@ export class Food {
     setPos = (x: number, y: number) => {
         this.posX = x;
         this.posY = y;
+    }
+
+    setDisplay = (isDisplay: boolean) => {
+        this.isDisplay = isDisplay;
     }
 }
 

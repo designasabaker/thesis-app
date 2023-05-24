@@ -52,8 +52,7 @@ const JoySticker2 = (props:any) => {
                 onMouseMove={(e) =>
                 {
                     joystickControllerObj.handleMouseMove(e);
-                    // trigger the movement of the cart
-                    movementFn(joystickControllerObj.deltaPosition.x,joystickControllerObj.deltaPosition.y);
+                    movementFn(joystickControllerObj.deltaPosition.x, joystickControllerObj.deltaPosition.y)
                 }} // mouse move
                 // onMouseUp={() => {joystickControllerObj.handleMouseUpLeave()}} // mouse up
                 // onMouseLeave={() => {joystickControllerObj.handleMouseUpLeave()}} // mouse leave

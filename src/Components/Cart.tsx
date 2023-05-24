@@ -12,18 +12,21 @@ const isClose = (food:FoodClass, cart:CartClass) => {
     return distance < close_distance_threshold;
 }
 
+// let foodsOnDisplay:FoodClass[];
+// let foodsClose:FoodClass[];
+
 export const Cart = (props:any) => {
     const id = props.id;
     const cart: CartClass = props.CartObj;
     const foodsListenOn:FoodClass[] = props.foodsListenOn;
 
-    const foodsOnDisplay:FoodClass[] = foodsListenOn.filter((food:FoodClass) => food.isDisplay);
-    const foodsClose:FoodClass[] = foodsOnDisplay.filter((food:FoodClass) => isClose(food,cart));
+    const foodsOnDisplay = foodsListenOn.filter((food:FoodClass) => food.isDisplay);
+    const foodsClose = foodsOnDisplay.filter((food:FoodClass) => isClose(food,cart));
 
     if (foodsClose.length > 0){
         foodsClose.forEach((food:FoodClass) => {
-            food.isDisplay = false;
-            cart.addFood(food);
+            food.setDisplay(false);
+            cart.addFood(food.fid)
         })
     }
 

@@ -11,17 +11,20 @@ import CartShoppingList from "../Components/CartShoppingList";
 function initFoodList(){
     // initialize food list HERE
     const foodObjList:FoodClass[] = [];
+
     const windowWidth:number = window.innerWidth;
     const windowHeight:number = window.innerHeight;
     const numOfFood:number = FoodJSONList.length;
     const numOFGrade:number = numOfFood + 2;
     const unitWidth:number = windowWidth / numOFGrade;
     const unitHeight:number = windowHeight / numOFGrade;
+
     FoodJSONList.forEach((food:foodJSON) => {
         const indexX:number = Math.floor(Math.random() * numOfFood + 1);
         const indexY:number = Math.floor(Math.random() * numOfFood + 1);
         const newFoodObj = new FoodClass(food.id, food.name, unitWidth * indexX,unitHeight * indexY, food.srcImg);
         foodObjList.push(newFoodObj);
+        return null;
     });
     return foodObjList;
 }
@@ -40,9 +43,9 @@ export const Shopping = () => {
                     }}
             />
             {/* foods */}
-            {foodObjList.map((foodObj:FoodClass,index) => {
+            {foodObjList.map((foodObj:FoodClass) => {
                 return (
-                    <Food key={`foodObj${index}`} food={foodObj} />
+                    <Food key={foodObj.fid} food={foodObj} />
                 )})}
             {/* Cart */}
             <Cart
@@ -50,7 +53,14 @@ export const Shopping = () => {
                 CartObj={cartObj}
                 foodsListenOn={foodObjList}
             />
-            <CartShoppingList cartObj={cartObj}/>
+            <CartShoppingList cartObj={cartObj} clickFn={(foodid:string,cartObj:CartClass)=>{
+                // console.log('click');
+                const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid)
+                if(!foodObj) return;
+                foodObj.setDisplay(true);
+                cartObj.removeFood(foodid);
+            }
+            }/>
             {/*<JoySticker />*/}
             <JoySticker2
                 movementFn={cartObj.addMovement}

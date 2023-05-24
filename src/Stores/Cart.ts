@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {Food} from "./Food";
+// import {Food} from "./Food";
 import {throttle} from "../utils/throttle";
 
 export class Cart {
@@ -7,7 +7,7 @@ export class Cart {
     posX = 0;
     posY = 0;
     image = '';
-    inCartFood:Food[] = [];
+    inCartFood:string[] = [];
     moveIntervalId:any;
 
     constructor(cid: number, posX: number, posY: number, image: string) {
@@ -25,13 +25,13 @@ export class Cart {
         this.posY = y;
     }
 
-    addFood = (food:Food) => {
-        this.inCartFood.push(food);
+    addFood = (foodid:string) => {
+        this.inCartFood.push(foodid);
     }
 
-    removeFood = (food:Food) => {
+    removeFood = (foodid:string) => {
         this.inCartFood = this.inCartFood.filter((f) => {
-            return f.fid !== food.fid;
+            return foodid !== f;
         })
     }
 
@@ -41,9 +41,6 @@ export class Cart {
         this.moveIntervalId = setInterval(()=>{
             this.setPos(this.posX + x / scale, this.posY + y / scale);
         }, 15);
-        setTimeout(()=>{
-            clearInterval(this.moveIntervalId);
-        }, 10000);
     }, 100)
 
     clearMovement = () => {
