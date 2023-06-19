@@ -28,10 +28,13 @@ export const Food = (props:any) => {
                     fontSize: '10px',
                 }}
             >
-                {isLoading ? 'Loading...' : food.name}
+                {isLoading && 'Loading...'}
+                {(food.isDisplay && !isLoading) && food.name}
             </p>
             {food.isDisplay ?
-                <img style={{
+                <img
+                    className={"rounded-full bg-white p-3"}
+                    style={{
                     position: 'absolute',
                     width: '100%',
                     height: '100%',}}

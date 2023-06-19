@@ -5,7 +5,7 @@ const NavLinkStyle = ({isActive}:any) => {
         margin: 0,
         padding: '0 5px',
         textDecoration: 'none',
-        color: isActive? 'blue' : 'black',
+        color: isActive? 'white' : 'gray',
     }
 }
 export const StyledNavbar = () => {
@@ -15,7 +15,7 @@ export const StyledNavbar = () => {
             top: 0,
             height: '16px',
             width: '100%',
-            backgroundColor: 'white',
+            backgroundColor: 'transparent',
         }}>
             <div
                 style={{

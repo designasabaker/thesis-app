@@ -22,6 +22,7 @@ export const Cart = (props:any) => {
     const foodsListenOn:FoodClass[] = props.foodsListenOn;
 
     const foodsOnDisplay = foodsListenOn.filter((food:FoodClass) => food.isDisplay);
+
     const foodsClose = foodsOnDisplay.filter((food:FoodClass) => isClose(food,cart));
     const foodsCloseButNotJustRestored = foodsClose.filter((food:FoodClass) => !food.justRestored);
 
@@ -30,23 +31,25 @@ export const Cart = (props:any) => {
         if (foodsCloseButNotJustRestored.length > 0){
             foodsCloseButNotJustRestored.forEach((food:FoodClass) => {
             food.setDisplay(false);
+            food.setNumOrdered(1);
             cart.addFood(food.fid)
         })
-    }},[foodsCloseButNotJustRestored])
+    }},[foodsCloseButNotJustRestored]) // each time foodsCloseButNotJustRestored changes, run the effect
 
     return (
         <div
             id={id}
             style={{
                 position: 'fixed',
-                width: '60px',
-                height: '60px',
+                width: '40px',
+                height: '40px',
                 left: cart.posX,
                 top: cart.posY,
                 background: `url(${cart.image})`,
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
                 }}
+            className={"shadow-lg rounded-full bg-white p-3 border-2 border-white"}
         >
         </div>
     )

@@ -3,16 +3,12 @@ import StyledNavbar from "../Components/StyledNavbar";
 
 const SharedLayout = () => {
     return (
-        <>
+        <div className={"bg-black"}>
             <StyledNavbar />
-            <div
-                style={{
-                    margin: '16px 0 0 0',
-                    }}
-            >
+            <div>
                 <Outlet />
             </div>
-        </>
+        </div>
     );
 };
 export default SharedLayout;

@@ -8,31 +8,27 @@ const joystickControllerObj:JoystickerControllerClass = new JoystickerController
 const JoySticker2 = (props:any) => {
     const movementFn = props.movementFn;
     const leaveFn = props.leaveFn;
+
     useEffect(() => {
-        // 在组件挂载时绑定事件处理程序
         window.addEventListener('mouseup', joystickControllerObj.handleMouseUpLeave);
         window.addEventListener('mouseup', leaveFn);
 
-        // 在组件卸载时解除绑定
         return () => {
             window.removeEventListener('mouseup', joystickControllerObj.handleMouseUpLeave);
         };
-    }, []); // 注意这个空数组，它确保了回调函数只在组件挂载和卸载时运行
+    }, []);
     return (
         // base
         <div
             style={{
-                position:'fixed',
-                bottom: 100,
-                left: '50vw',
-                transform: 'translateX(-50%)',
                 width: `${joystickControllerObj.baseWidth}px`,
                 height: `${joystickControllerObj.baseWidth}px`,
-                background: `url(${joystickControllerObj.backgroundImage})`,
+                // background: `url(${joystickControllerObj.backgroundImage})`,
                 // background:'red',
-                backgroundSize: 'contain',
+                //backgroundSize: 'contain',
                 zIndex: 100,
             }}
+            className={"border border-white rounded-full shadow-white shadow-inner"}
             // onMouseUp={() => {joystickControllerObj.handleMouseUpLeave()}} // mouse up
             // onMouseLeave={() => {joystickControllerObj.handleMouseUpLeave()}} // mouse leave
         >
@@ -44,9 +40,11 @@ const JoySticker2 = (props:any) => {
                     left: joystickControllerObj.position.x,
                     width: `${joystickControllerObj.stickerWidth}px`,
                     height: `${joystickControllerObj.stickerWidth}px`,
-                    background: `url(${joystickControllerObj.stickerImage})`,
-                    backgroundSize: 'contain',
+                    //background: `url(${joystickControllerObj.stickerImage})`,
+                    //backgroundSize: 'contain',
                     cursor: 'pointer',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle at 65% 15%, white 3px, white 30%, gray 60%, aqua 100%)'
                 }}
                 onMouseDown={(e) => {joystickControllerObj.handleMouseDown(e)}} // mouse down
                 onMouseMove={(e) =>

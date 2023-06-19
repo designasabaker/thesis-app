@@ -8,6 +8,7 @@ import FoodJSONList, {foodJSON} from '../Data/Foods';
 import JoySticker2 from "../Components/JoySticker2";
 import CartShoppingList from "../Components/CartShoppingList";
 import {observer} from "mobx-react";
+import {ResetCartBtn} from "../Components/ResetCartBtn";
 // import randomNums from "../utils/randomNums";
 
 function initFoodList(){
@@ -60,22 +61,55 @@ export const Shopping = () => {
                 CartObj={cartObj}
                 foodsListenOn={foodObjList}
             />
-            <CartShoppingList cartObj={cartObj} clickFn={(foodid:string,cartObj:CartClass)=>{
-                // console.log('click');
-                const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid)
-                if(!foodObj) return;
-                //move cart first to avoid trigger isClose
-                cartObj.offsetPos(0,100);
-                foodObj.preventReAdding();
-                foodObj.setDisplay(true);
-                cartObj.removeFood(foodid);
-            }
-            }/>
-            {/*<JoySticker />*/}
-            <JoySticker2
-                movementFn={cartObj.addMovement}
-                leaveFn={cartObj.clearMovement}
+            <CartShoppingList
+                cartObj={cartObj}
+                foodObjList={foodObjList}
+                // clickDeleteFn={(foodid:string,cartObj:CartClass)=>{
+                //     // console.log('click');
+                //     const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid)
+                //     if(!foodObj) return;
+                //     //move cart first to avoid trigger isClose
+                //     cartObj.offsetPos(0,100);
+                //     foodObj.preventReAdding();
+                //     foodObj.setDisplay(true);
+                //     cartObj.removeFood(foodid);
+                // }}
+                // clickMinusFn={(foodid:string,cartObj:CartClass)=>{
+                //     console.log('click');
+                //     const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid);
+                //     if(!foodObj) return;
+                //     if(foodObj.numOrdered <= 1){
+                //         cartObj.offsetPos(0,100);
+                //         foodObj.preventReAdding();
+                //         foodObj.setDisplay(true);
+                //         cartObj.removeFood(foodid);
+                //     }else{
+                //         foodObj.setNumOrdered(foodObj.numOrdered - 1);
+                //     }
+                // }}
+                // clickAddFn={(foodid:string,cartObj:CartClass)=>{
+                //     // console.log('click');
+                //     const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid);
+                //     if(!foodObj) return;
+                //     foodObj.setNumOrdered(foodObj.numOrdered + 1);
+                // }}
             />
+            {/*<JoySticker />*/}
+            <div
+                style={{
+                    position:'fixed',
+                    bottom: 100,
+                    left: '50vw',
+                    transform: 'translateX(-50%)',
+                }}>
+                <div className={"flex flex-col justify-center"}>
+                    <JoySticker2
+                        movementFn={cartObj.addMovement}
+                        leaveFn={cartObj.clearMovement}
+                    />
+                    <ResetCartBtn cartObj={cartObj} />
+                </div>
+            </div>
         </>
     )
 }
