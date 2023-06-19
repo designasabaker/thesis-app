@@ -3,7 +3,15 @@ import {observer} from "mobx-react";
 // import FoodJSONList from "../Data/Foods";
 import {FaPlusSquare, FaMinusSquare, FaTrash} from "react-icons/fa";
 
+const FoodSubmittedKey = 'foodSubmitted';
+
+window.onload = () => {
+    localStorage.setItem(FoodSubmittedKey, '');
+}
+
 export const CartShoppingList = (props:any) => {
+    const getFoodSubmitted:string = localStorage.getItem(FoodSubmittedKey) || "";
+
     const cartObj:Cart = props.cartObj;
     const foodObjList = props.foodObjList;
     // const clickDeleteFn = props.clickDeleteFn;
@@ -38,6 +46,34 @@ export const CartShoppingList = (props:any) => {
         foodObj.preventReAdding();
         foodObj.setDisplay(true);
         cartObj.removeFood(foodid);
+    }
+
+    function handleSubmit(){
+        const foodObjsInCart: FoodClass[] = cartObj.inCartFood.map((foodid:string) => {
+            const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid);
+            if(!foodObj) return null;
+            return foodObj;
+        });
+
+        const foodObjsInCartString:string = foodObjsInCart.map((foodObj:FoodClass) => {
+            return `(${foodObj.name} x ${foodObj.numOrdered})`;
+        }).join("  +  ");
+
+        const totalFoodSubmitted = getFoodSubmitted + "  +  " + foodObjsInCartString;
+
+        localStorage.setItem(FoodSubmittedKey, totalFoodSubmitted);
+        console.log(totalFoodSubmitted);
+        deleteFoodsInCart();
+    }
+
+    function deleteFoodsInCart(){
+        cartObj.inCartFood.forEach((foodid:string) => {
+            const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid);
+            if(!foodObj) return;
+            foodObj.preventReAdding();
+            foodObj.setDisplay(true);
+        });
+        cartObj.clearFood();
     }
 
     return (
@@ -78,6 +114,13 @@ export const CartShoppingList = (props:any) => {
                         </div>
                     )
                 })}
+            </div>
+            <div className={"px-6"}>
+                <button
+                    className={"w-full mt-6 bg-transparent border border-black hover:bg-white hover:text-black text-black font-thin text-xs py-1 px-2 rounded-full"}
+                    onClick={handleSubmit}>
+                    SUBMIT
+                </button>
             </div>
         </div>
     )

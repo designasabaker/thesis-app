@@ -35,6 +35,10 @@ export class Cart {
         })
     }
 
+    clearFood = () => {
+        this.inCartFood = [];
+    }
+
     offsetPos = (x: number, y: number) => {
         this.posX += x;
         this.posY += y;
