@@ -10,7 +10,9 @@ window.onload = () => {
 }
 
 export const CartShoppingList = (props:any) => {
-    const getFoodSubmitted:string = localStorage.getItem(FoodSubmittedKey) || "";
+    const getFoodSubmitted = () => {
+        return localStorage.getItem(FoodSubmittedKey) || ""
+    };
 
     const cartObj:Cart = props.cartObj;
     const foodObjList = props.foodObjList;
@@ -59,7 +61,7 @@ export const CartShoppingList = (props:any) => {
             return `(${foodObj.name} x ${foodObj.numOrdered})`;
         }).join("  +  ");
 
-        const totalFoodSubmitted = getFoodSubmitted + "  +  " + foodObjsInCartString;
+        const totalFoodSubmitted = getFoodSubmitted() + "  +  " + foodObjsInCartString;
 
         localStorage.setItem(FoodSubmittedKey, totalFoodSubmitted);
         console.log(totalFoodSubmitted);
@@ -121,6 +123,10 @@ export const CartShoppingList = (props:any) => {
                     onClick={handleSubmit}>
                     SUBMIT
                 </button>
+            </div>
+            <div className={"text-black text-sm text-center pt-3 font-thin"}>
+                <h1>Order Submitted</h1>
+                <p>{getFoodSubmitted()}</p>
             </div>
         </div>
     )
