@@ -6,7 +6,7 @@ import {FaPlusSquare, FaMinusSquare, FaTrash} from "react-icons/fa";
 export const CartShoppingList = (props:any) => {
     const cartObj:Cart = props.cartObj;
     const foodObjList = props.foodObjList;
-    const clickDeleteFn = props.clickDeleteFn;
+    // const clickDeleteFn = props.clickDeleteFn;
     // const clickMinusFn = props.clickMinusFn;
     // const clickAddFn = props.clickAddFn;
     const hasAddCart:boolean = cartObj.inCartFood.length > 0;
