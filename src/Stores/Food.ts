@@ -9,6 +9,8 @@ export class Food {
     isDisplay = true;
     justRestored = false;
     numOrdered = 0;
+    showInfo = false;
+    info = 'info';
 
     constructor(fid: string, name: string, posX: number, posY: number, image: string) {
         makeAutoObservable(this);
@@ -20,6 +22,8 @@ export class Food {
         this.isDisplay = true;
         this.justRestored = false;
         this.numOrdered = 0;
+        this.showInfo = false;
+        this.info = 'info';
     }
 
     setPos = (x: number, y: number) => {
@@ -40,6 +44,11 @@ export class Food {
 
     setNumOrdered = (numOrdered: number) => {
         this.numOrdered = numOrdered;
+    }
+
+    setShowInfo = (showInfo: boolean) => {
+        console.log('setShowInfo', this, showInfo);
+        this.showInfo = showInfo;
     }
 }
 

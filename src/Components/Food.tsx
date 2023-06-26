@@ -17,7 +17,7 @@ export const Food = (props:any) => {
                 backgroundRepeat: 'no-repeat',
                 }}
         >
-            <p
+            <div
                 style={{
                     position: 'fixed',
                     width: '60px',
@@ -29,9 +29,15 @@ export const Food = (props:any) => {
                 }}
             >
                 {isLoading && 'Loading...'}
-                {(food.isDisplay && !isLoading) && food.name}
-            </p>
+                {(food.isDisplay && !isLoading) && food.name} <br />
+                {food.showInfo && (
+                    <div className={"bg-black"}>
+                        {food.info}
+                    </div>
+                )}
+            </div>
             {food.isDisplay ?
+                <div>
                 <img
                     className={"rounded-full bg-white p-3"}
                     style={{
@@ -42,6 +48,8 @@ export const Food = (props:any) => {
                     onLoad={() => setIsLoading(false)}
                     alt={food.name}
                 />
+
+                </div>
                 :
                 <p>X</p>
             }
