@@ -2,6 +2,7 @@ import {Cart, Food as FoodClass} from "../Stores";
 import {observer} from "mobx-react";
 // import FoodJSONList from "../Data/Foods";
 import {FaPlusSquare, FaMinusSquare, FaTrash} from "react-icons/fa";
+import {useCartContext} from "../Contexts/CartContext";
 
 const FoodSubmittedKey = 'foodSubmitted';
 
@@ -10,6 +11,7 @@ window.onload = () => {
 }
 
 export const CartShoppingList = (props:any) => {
+    const {cart} = useCartContext();
     const getFoodSubmitted = () => {
         return localStorage.getItem(FoodSubmittedKey) || ""
     };
@@ -80,36 +82,41 @@ export const CartShoppingList = (props:any) => {
 
     return (
         <div className={"text-black bg-white fixed w-60 right-0 top-0 m-0 px-2 pb-6 rounded-lg"}>
-            <h1 className={"text-center font-bold font-sans my-3"}>Shopping List</h1>
-            {!hasAddCart && <p className={"font-thin text-sm text-center"}>Control the joystick to collect foods!</p>}
+            <h1 className={"text-black text-center font-bold font-sans my-3"}>Shopping List</h1>
+            {!hasAddCart && <p className={"text-black font-thin text-sm text-center"}>Control the joystick to collect foods!</p>}
             <div className={"flex flex-col gap-3"}>
-                {cartObj.inCartFood.map((foodid:string) => {
-                    const foodObj:FoodClass = foodObjList.find((food:FoodClass) => food.fid === foodid);
+                {cart.map((foodObj:FoodClass) => {
                     if(!foodObj) return null;
+                    if(foodObj.numOrdered <= 0) return null;
+                    const {fid:id, name, numOrdered, image} = foodObj;
                     return (
-                        <div key={`cartFood${foodid}`} className={"flex flex-row gap-2 items-center"}>
+                        <div key={`cartFood${id}`} className={"flex flex-row gap-2 items-center"}>
                             <img
-                                src={foodObj.image}
-                                alt={foodObj.name}
+                                src={image}
+                                alt={name}
                                 className={"rounded-full"}
                                 style={{width: '60px', height: '60px'}}
                             />
                             <div className={"flex flex-col w-full pr-6"}>
-                                <p className={"uppercase"}>{foodObj.name}</p>
+                                <p className={"text-black uppercase"}>{foodObj.name}</p>
                                 <div className={"flex flex-row justify-between"}>
                                     <div className={"flex flex-row items-center"}>
                                         <button
-                                            onClick={() => {handleMinusClick(foodid,cartObj);}}>
-                                            <FaMinusSquare />
+                                            className={"text-black flex flex-row"}
+                                            onClick={() => {handleMinusClick(id,cartObj);}}>
+                                            <FaMinusSquare color="red" />-
                                         </button>
-                                        <span className={"px-1 pb-1"}>{foodObj.numOrdered}</span>
+                                        <span className={"text-black px-1 pb-1"}>{numOrdered}</span>
                                         <button
-                                            onClick={() => {handleAddClick(foodid);}}>
-                                            <FaPlusSquare />
+                                            className={"text-black flex flex-row"}
+                                            onClick={() => {handleAddClick(id);}}>
+                                            +<FaPlusSquare />
                                         </button>
                                     </div>
-                                    <button onClick={() => handleDeleteClick(foodid,cartObj)}>
-                                        <FaTrash />
+                                    <button
+                                        className={"text-black flex flex-row"}
+                                        onClick={() => handleDeleteClick(id,cartObj)}>
+                                        X<FaTrash />
                                     </button>
                                 </div>
                             </div>

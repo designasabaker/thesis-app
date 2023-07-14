@@ -1,10 +1,17 @@
 import {Food as FoodClass} from '../Stores/Food';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {observer} from "mobx-react";
+import {useCartContext} from "../Contexts/CartContext";
 
 export const Food = (props:any) => {
+    const {updateCart} = useCartContext();
     const [isLoading, setIsLoading] = useState(true);
-    const food: FoodClass = props.food;
+    const food: FoodClass = props.food; // food is a MobX object
+
+    useEffect(() => {
+        updateCart(food); // update cart when food.numOrdered changes
+    },[food.numOrdered]);
+
     return (
         <div
             style={{

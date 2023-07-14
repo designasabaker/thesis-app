@@ -7,3 +7,22 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+@layer base{
+    *{
+        @apply text-white;
+    }
+
+    a:hover {
+        @apply underline;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-heading my-6 font-bold;
+    }
+}

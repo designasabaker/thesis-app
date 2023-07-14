@@ -31,15 +31,21 @@ export const Cart = (props:any) => {
 
     // avoid cart and food re-render conflict
     useEffect(()=>{
-        if (foodsCloseButNotJustRestored.length > 0){
-            foodsCloseButNotJustRestored.forEach((food:FoodClass) => {
-            food.setShowInfo(true);
-            setShowAddBtn(true);
-            //food.setDisplay(false);
-            //food.setNumOrdered(1);
-            //cart.addFood(food.fid)
-        })
-    }},[foodsCloseButNotJustRestored]) // each time foodsCloseButNotJustRestored changes, run the effect
+            if (foodsCloseButNotJustRestored.length > 0){
+                foodsCloseButNotJustRestored.forEach((food:FoodClass) => {
+                    food.setShowInfo(true);
+                    setShowAddBtn(true);
+                    cart.clearMovement();
+                    //food.setDisplay(false);
+                    //food.setNumOrdered(1);
+                    //cart.addFood(food.fid)
+                    }
+                )
+            }
+            else{
+                setShowAddBtn(false);
+            }
+        },[foodsCloseButNotJustRestored]) // each time foodsCloseButNotJustRestored changes, run the effect
 
     const handleAddBtnClick = () => {
         setShowAddBtn(false); // hide add button
@@ -69,7 +75,10 @@ export const Cart = (props:any) => {
             {showAddBtn &&
                 <button
                     onClick={handleAddBtnClick}
-                >+</button>
+                    className={"bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full ease-in-out transition-all duration-300"}
+                >
+                    +
+                </button>
             }
         </div>
     )

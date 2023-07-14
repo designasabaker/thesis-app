@@ -26,7 +26,7 @@ export class Cart {
     }
 
     addFood = (foodid:string) => {
-        this.inCartFood.push(foodid);
+        this.inCartFood = [...this.inCartFood, foodid];
     }
 
     removeFood = (foodid:string) => {
