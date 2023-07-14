@@ -8,6 +8,10 @@
     box-sizing: border-box;
 }
 
+body{
+    background: black;
+}
+
 @layer base{
     *{
         @apply text-white;

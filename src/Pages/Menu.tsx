@@ -20,16 +20,17 @@ export const Menu = () => {
     }
 
     return (
-        <div className={'h-screen'}>
-            <h1>Menu</h1>
-            <ul>
+        <div className='m-auto mt-16'>
+            <h1 className='text-3xl text-center mb-6'>Menu</h1>
+            <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {foodObjList.map((food) => {
-                    const {fid:id, name, numOrdered} = food;
+                    const {fid:id, name, numOrdered,image:src} = food;
                     return (
-                        <li key={id}>
-                            <h2>{name}</h2>
+                        <li key={id} className="p-6 rounded shadow">
+                            <img src={src} alt={name} className='max-w-24 max-h-24 contain mb-4 rounded-full'/>
+                            <h2 className='mb-4 text-xl'>{name}</h2>
                             <button onClick={() => handleMinusClick(id)}>-</button>
-                            <span>{numOrdered}</span>
+                            <span className='mx-2'>{numOrdered}</span>
                             <button onClick={() => handleAddClick(id)}>+</button>
                         </li>
                 )})}
