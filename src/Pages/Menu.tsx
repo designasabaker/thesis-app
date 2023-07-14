@@ -1,5 +1,6 @@
 import {useFoodContext} from "../Contexts/FoodContext";
 import {Food as FoodClass} from "../Stores";
+import {observer} from "mobx-react";
 
 export const Menu = () => {
     const {foodObjList} = useFoodContext();
@@ -39,4 +40,4 @@ export const Menu = () => {
     )
 }
 
-export default Menu;
+export default observer(Menu);

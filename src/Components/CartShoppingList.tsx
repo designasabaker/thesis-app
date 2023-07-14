@@ -2,7 +2,7 @@ import {Cart, Food as FoodClass} from "../Stores";
 import {observer} from "mobx-react";
 // import FoodJSONList from "../Data/Foods";
 import {FaPlusSquare, FaMinusSquare, FaTrash} from "react-icons/fa";
-import {useCartContext} from "../Contexts/CartContext";
+import {useFoodContext} from "../Contexts/FoodContext";
 
 const FoodSubmittedKey = 'foodSubmitted';
 
@@ -11,13 +11,12 @@ window.onload = () => {
 }
 
 export const CartShoppingList = (props:any) => {
-    const {cart} = useCartContext();
+    const {foodObjList} = useFoodContext();
     const getFoodSubmitted = () => {
         return localStorage.getItem(FoodSubmittedKey) || ""
     };
 
     const cartObj:Cart = props.cartObj;
-    const foodObjList = props.foodObjList;
     // const clickDeleteFn = props.clickDeleteFn;
     // const clickMinusFn = props.clickMinusFn;
     // const clickAddFn = props.clickAddFn;
@@ -53,39 +52,41 @@ export const CartShoppingList = (props:any) => {
     }
 
     function handleSubmit(){
-        const foodObjsInCart: FoodClass[] = cartObj.inCartFood.map((foodid:string) => {
-            const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid);
-            if(!foodObj) return null;
-            return foodObj;
-        });
-
-        const foodObjsInCartString:string = foodObjsInCart.map((foodObj:FoodClass) => {
-            return `(${foodObj.name} x ${foodObj.numOrdered})`;
-        }).join("  +  ");
-
-        const totalFoodSubmitted = getFoodSubmitted() + "  +  " + foodObjsInCartString;
-
-        localStorage.setItem(FoodSubmittedKey, totalFoodSubmitted);
-        console.log(totalFoodSubmitted);
-        deleteFoodsInCart();
+        // const foodObjsInCart: FoodClass[] = cartObj.inCartFood.map((foodid:string) => {
+        //     const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid);
+        //     if(!foodObj) return null;
+        //     return foodObj;
+        // });
+        //
+        // const foodObjsInCartString:string = foodObjsInCart.map((foodObj:FoodClass) => {
+        //     return `(${foodObj.name} x ${foodObj.numOrdered})`;
+        // }).join("  +  ");
+        //
+        // const totalFoodSubmitted = getFoodSubmitted() + "  +  " + foodObjsInCartString;
+        //
+        // localStorage.setItem(FoodSubmittedKey, totalFoodSubmitted);
+        // console.log(totalFoodSubmitted);
+        // deleteFoodsInCart();
     }
 
-    function deleteFoodsInCart(){
-        cartObj.inCartFood.forEach((foodid:string) => {
-            const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid);
-            if(!foodObj) return;
-            foodObj.preventReAdding();
-            foodObj.setDisplay(true);
-        });
-        cartObj.clearFood();
-    }
+    // function deleteFoodsInCart(){
+    //     cartObj.inCartFood.forEach((foodid:string) => {
+    //         const foodObj = foodObjList.find((food:FoodClass) => food.fid === foodid);
+    //         if(!foodObj) return;
+    //         foodObj.preventReAdding();
+    //         foodObj.setDisplay(true);
+    //     });
+    //     cartObj.clearFood();
+    // }
 
     return (
         <div className={"text-black bg-white fixed w-60 right-0 top-0 m-0 px-2 pb-6 rounded-lg"}>
             <h1 className={"text-black text-center font-bold font-sans my-3"}>Shopping List</h1>
             {!hasAddCart && <p className={"text-black font-thin text-sm text-center"}>Control the joystick to collect foods!</p>}
             <div className={"flex flex-col gap-3"}>
-                {cart.map((foodObj:FoodClass) => {
+                {foodObjList
+                    .filter((foodObj:FoodClass) => foodObj.numOrdered > 0)
+                    .map((foodObj:FoodClass) => {
                     if(!foodObj) return null;
                     if(foodObj.numOrdered <= 0) return null;
                     const {fid:id, name, numOrdered, image} = foodObj;

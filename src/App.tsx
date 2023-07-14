@@ -3,14 +3,14 @@ import {SharedLayout, Home, Menu, Shopping} from "./Pages";
 import {AuthUserProvider} from "./Firebase/auth";
 import './index.css'
 import FoodProvider from "./Contexts/FoodContext";
-import CartProvider from "./Contexts/CartContext";
+// import CartProvider from "./Contexts/CartContext";
 
 function App() {
   return (
     <>
         <AuthUserProvider>
             <FoodProvider>
-                <CartProvider>
+                {/*<CartProvider>*/}
                     <BrowserRouter>
                         <Routes>
                             <Route path="/" element={<SharedLayout />} >
@@ -20,7 +20,7 @@ function App() {
                             </Route>
                         </Routes>
                     </BrowserRouter>
-                </CartProvider>
+                {/*</CartProvider>*/}
             </FoodProvider>
         </AuthUserProvider>
     </>
